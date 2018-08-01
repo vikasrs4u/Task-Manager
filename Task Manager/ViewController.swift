@@ -8,7 +8,73 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource
+{
+    let dailyTask = ["Do atleast one leetcode problem.",
+                     "Learn Data Structures.",
+                     "Learn Swift new features."]
+    let weeklyTask = ["Revise all the leetcode problems solved.",
+                     "Revice Data Structures.",
+                     "Work on your new iOS App Idea."]
+    
+    let monthlyTask = ["Call your atleast one of your close friend.",
+                       "Call a close relative.",
+                       "Visit a new place."]
+    
+    
+    // Below are the table view data source methods
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        switch section
+        {
+        case 0:
+            return dailyTask.count
+        case 1:
+            return weeklyTask.count
+        case 2:
+            return monthlyTask.count
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell = UITableViewCell()
+        switch indexPath.section
+        {
+        case 0:
+            cell.textLabel?.text = dailyTask[indexPath.row]
+        case 1:
+            cell.textLabel?.text = weeklyTask[indexPath.row]
+        case 2:
+            cell.textLabel?.text = monthlyTask[indexPath.row]
+        default:
+            print("This will never happen")
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        switch section
+        {
+        case 0:
+            return "Daily Task"
+        case 1:
+            return "Weekly Task"
+        case 2:
+            return "Monthly Task"
+        default:
+            return nil
+        }
+    }
 
     @IBAction func darkModeClicked(_ sender: Any)
     {
