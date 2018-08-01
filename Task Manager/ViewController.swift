@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
     let dailyTask = ["Do atleast one leetcode problem.",
                      "Learn Data Structures.",
@@ -21,6 +21,13 @@ class ViewController: UIViewController, UITableViewDataSource
                        "Call a close relative.",
                        "Visit a new place."]
     
+    
+    // Below is the table view delegate methods
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+            print ("Your selected row is \(indexPath.row) and its section is \(indexPath.section)")
+    }
     
     // Below are the table view data source methods
     func numberOfSections(in tableView: UITableView) -> Int
