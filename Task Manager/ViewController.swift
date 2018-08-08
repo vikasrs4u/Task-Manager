@@ -15,23 +15,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var darkModeSwitchOutlet: UISwitch!
     
     
-    let dailyTask = ["Do atleast one leetcode problem.",
-                     "Learn Data Structures.",
-                     "Learn Swift new features."]
-    let weeklyTask = ["Revise all the leetcode problems solved.",
-                     "Revice Data Structures.",
-                     "Work on your new iOS App Idea."]
+    var dailyTask = [Task(name:"Do atleast one leetcode problem.", type:.daily, completed: false),
+                    Task(name:"Learn Data Structures.", type:.daily, completed: false),
+                    Task(name:"Learn Swift new features.", type:.daily, completed: false)]
+
+    var weeklyTask = [Task(name:"Revise all the leetcode problems solved.", type:.daily, completed: false),
+                      Task(name:"Revice Data Structures.", type:.daily, completed: false),
+                      Task(name:"Work on your new iOS App Idea.", type:.daily, completed: false)]
+
+    var monthlyTask = [Task(name:"Call your atleast one of your close friend.", type:.daily, completed: false),
+                       Task(name:"Call a close relative.", type:.daily, completed: false),
+                       Task(name:"Visit a new place.", type:.daily, completed: false)]
     
-    let monthlyTask = ["Call your atleast one of your close friend.",
-                       "Call a close relative.",
-                       "Visit a new place."]
     
+//    // Below is the table view delegate methods
+
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+//    {
+//            print ("Your selected row is \(indexPath.row) and its section is \(indexPath.section )")
+//    }
     
-    // Below is the table view delegate methods
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
-            print ("Your selected row is \(indexPath.row) and its section is \(indexPath.section )")
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let completedAction = UIContextualAction(style: .normal, title: "Completed") { (action:UIContextualAction, sourceView:UIView, actionPerformed:(Bool)->Void) in
+            
+            switch indexPath.section
+            {
+            case 0:
+                self.dailyTask[indexPath.row].completed = true
+            case 1:
+                self.weeklyTask[indexPath.row].completed = true
+            case 2:
+                self.monthlyTask[indexPath.row].completed = true
+            default:
+                print("Do nothing")
+            }
+            
+            tableView.reloadData()
+            actionPerformed(true)
+        }
+        completedAction.backgroundColor = #colorLiteral(red: 0.3254901961, green: 0.9058823529, blue: 0, alpha: 1)
+        return UISwipeActionsConfiguration(actions: [completedAction])
     }
     
     // Below are the table view data source methods
@@ -59,25 +82,56 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = UITableViewCell()
+        var currentTask:Task!
         switch indexPath.section
         {
         case 0:
-            cell.textLabel?.text = dailyTask[indexPath.row]
+            currentTask = dailyTask[indexPath.row]
         case 1:
-            cell.textLabel?.text = weeklyTask[indexPath.row]
+            currentTask = weeklyTask[indexPath.row]
         case 2:
-            cell.textLabel?.text = monthlyTask[indexPath.row]
+            currentTask = monthlyTask[indexPath.row]
         default:
             print("This will never happen")
         }
         
+        cell.textLabel?.text = currentTask.name
+        
         if (darkModeSwitchOutlet.isOn)
         {
-            cell.textLabel?.textColor = UIColor.white
+            if(currentTask.completed)
+            {
+              cell.textLabel?.textColor = UIColor.lightGray
+              cell.accessoryType = .checkmark
+            }
+            else
+            {
+               cell.textLabel?.textColor = UIColor.white
+               cell.accessoryType = .none
+            }
+            
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+            let bgColorView = UIView()
+            bgColorView.backgroundColor = UIColor.blue
+            cell.selectedBackgroundView = bgColorView
         }
         else
         {
-            cell.textLabel?.textColor = UIColor.black
+            if(currentTask.completed)
+            {
+                cell.textLabel?.textColor = UIColor.lightGray
+                cell.accessoryType = .checkmark
+            }
+            else
+            {
+                cell.textLabel?.textColor = UIColor.black
+                cell.accessoryType = .none
+            }
+            
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize:16)
+            let bgColorView = UIView()
+            bgColorView.backgroundColor = UIColor.cyan
+            cell.selectedBackgroundView = bgColorView
         }
        
         cell.backgroundColor = UIColor.clear
@@ -87,11 +141,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
-        
-        if let tableViewHeaderFooterView = tableView.tableHeaderView as? UITableViewHeaderFooterView
-        {
-            tableViewHeaderFooterView.textLabel?.textColor = UIColor.red
-        }
         
         switch section
         {
@@ -106,33 +155,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
 
-    @IBAction func darkModeClicked(_ sender: Any)
-    {
-        view.backgroundColor = UIColor.black
-        
-        // To get all the subviews, this will be a array of UIViews
-        let allSubViews = view.subviews
-        
-        // iterate through the array
-        for subView in allSubViews
-        {
-            // check if individual UIView is of type UILabel
-            if subView is UILabel
-            {
-                // If its a UILabel, the downcast it using as
-                let labelSubview = subView as! UILabel
-                
-                // Now change the c
-                labelSubview.textColor = UIColor.white
-                
-                UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-            }
-        }
-    }
-    
-    
-    
-    
+    // action called when we click on dark mode switch
     @IBAction func darkModeSwitch(_ sender: UISwitch)
     {
         if(sender.isOn)
@@ -140,7 +163,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             view.backgroundColor = UIColor.black
 
              UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
-        // This is very important as this calls the  table view delegate methods on relaod. 
+        // This is very important as this calls the  table view delegate methods on relaod.
             taskTableView.reloadData()
             
             
@@ -155,6 +178,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    // Code to change the table view header font color and font size
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
     {
         
@@ -173,8 +197,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     }
     
+  // Code to reload the task manager list
+    @IBAction func resetList(_ sender: Any)
+    {
+        for i in 0..<dailyTask.count
+        {
+            dailyTask[i].completed = false
+        }
+        
+        for i in 0..<weeklyTask.count
+        {
+            weeklyTask[i].completed = false
+        }
+        
+        for i in 0..<monthlyTask.count
+        {
+           monthlyTask[i].completed = false
+        }
+        
+        taskTableView.reloadData()
+        
+    }
     
-
     
 
 }
