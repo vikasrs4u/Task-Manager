@@ -10,6 +10,11 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
+    @IBOutlet weak var taskTableView: UITableView!
+    
+    @IBOutlet weak var darkModeSwitchOutlet: UISwitch!
+    
+    
     let dailyTask = ["Do atleast one leetcode problem.",
                      "Learn Data Structures.",
                      "Learn Swift new features."]
@@ -26,7 +31,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-            print ("Your selected row is \(indexPath.row) and its section is \(indexPath.section)")
+            print ("Your selected row is \(indexPath.row) and its section is \(indexPath.section )")
     }
     
     // Below are the table view data source methods
@@ -37,6 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
+        tableView.backgroundColor = UIColor.clear
         switch section
         {
         case 0:
@@ -65,11 +71,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("This will never happen")
         }
         
+        if (darkModeSwitchOutlet.isOn)
+        {
+            cell.textLabel?.textColor = UIColor.white
+        }
+        else
+        {
+            cell.textLabel?.textColor = UIColor.black
+        }
+       
+        cell.backgroundColor = UIColor.clear
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
+        
+        if let tableViewHeaderFooterView = tableView.tableHeaderView as? UITableViewHeaderFooterView
+        {
+            tableViewHeaderFooterView.textLabel?.textColor = UIColor.red
+        }
+        
         switch section
         {
         case 0:
@@ -106,16 +129,53 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
+    
+    
+    
+    
+    @IBAction func darkModeSwitch(_ sender: UISwitch)
+    {
+        if(sender.isOn)
+        {
+            view.backgroundColor = UIColor.black
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+             UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        // This is very important as this calls the  table view delegate methods on relaod. 
+            taskTableView.reloadData()
+            
+            
+        }
+        else
+        {
+            view.backgroundColor = UIColor.white
+            UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+            
+            // This is very important as this calls the  table view delegate methods on relaod.
+            taskTableView.reloadData()
+        }
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
+        
+        if(darkModeSwitchOutlet.isOn)
+        {
+            let header = view as? UITableViewHeaderFooterView
+            header?.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            header?.textLabel?.textColor = UIColor.white
+        }
+        else
+        {
+            let header = view as? UITableViewHeaderFooterView
+            header?.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+            header?.textLabel?.textColor = UIColor.black
+        }
 
+    }
+    
+    
+
+    
 
 }
 
