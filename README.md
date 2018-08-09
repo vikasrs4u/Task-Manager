@@ -3,7 +3,8 @@ Task Manager App is a basic iOS task manager app for iPhone with a beautiful use
 
 ### App Demo 
 
-![task mp4](https://user-images.githubusercontent.com/22437872/43873781-e7a2d65a-9b3c-11e8-8b6e-380e0dd86149.gif)
+![task mp4](https://user-images.githubusercontent.com/22437872/43876759-616b682c-9b4b-11e8-9fdd-5c8e25c0be90.gif)
+
 
 
 ### Features of the App:
