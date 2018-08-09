@@ -18,11 +18,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var darkModeSwitchOutlet: UISwitch!
     
     
-    var dailyTask = [Task(name:"Do atleast one leetcode problem.", type:.daily, completed: false),
+    var dailyTask = [Task(name:"Do atleast one Coding problem.", type:.daily, completed: false),
                     Task(name:"Learn Data Structures.", type:.daily, completed: false),
                     Task(name:"Learn Swift new features.", type:.daily, completed: false)]
 
-    var weeklyTask = [Task(name:"Revise all the leetcode problems solved.", type:.daily, completed: false),
+    var weeklyTask = [Task(name:"Revise all the Coding problems solved.", type:.daily, completed: false),
                       Task(name:"Revice Data Structures.", type:.daily, completed: false),
                       Task(name:"Work on your new iOS App Idea.", type:.daily, completed: false)]
 
