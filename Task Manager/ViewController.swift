@@ -8,9 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate
 {
     @IBOutlet weak var taskTableView: UITableView!
+    
+    @IBOutlet weak var addTextFieldData: UITextField!
+    
     
     @IBOutlet weak var darkModeSwitchOutlet: UISwitch!
     
@@ -35,6 +38,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //            print ("Your selected row is \(indexPath.row) and its section is \(indexPath.section )")
 //    }
     
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        // added this code to dismiss the keyboard on return or touch outside
+        self.addTextFieldData.delegate = self
+        
+        addTextFieldData.backgroundColor = UIColor.clear
+    }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let completedAction = UIContextualAction(style: .normal, title: "Completed") { (action:UIContextualAction, sourceView:UIView, actionPerformed:(Bool)->Void) in
             
@@ -163,6 +174,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             view.backgroundColor = UIColor.black
 
              UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+            
+            addTextFieldData.backgroundColor = UIColor.cyan
         // This is very important as this calls the  table view delegate methods on relaod.
             taskTableView.reloadData()
             
@@ -171,6 +184,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         else
         {
             view.backgroundColor = UIColor.white
+            addTextFieldData.backgroundColor = UIColor.white
             UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
             
             // This is very important as this calls the  table view delegate methods on relaod.
@@ -220,6 +234,59 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
+    
+    @IBAction func AddTask(_ sender: UIButton)
+    {
+        if let selectedSection = taskTableView.indexPathForSelectedRow?.section
+        {
+            if (addTextFieldData.text != "")
+            {
+                switch selectedSection
+                {
+                case 0:
+                    dailyTask.append(Task(name:addTextFieldData.text!, type:.daily, completed: false))
+                case 1:
+                    weeklyTask.append(Task(name:addTextFieldData.text!, type:.daily, completed: false))
+                case 2:
+                    monthlyTask.append(Task(name:addTextFieldData.text!, type:.daily, completed: false))
+                default:
+                    print("Nothing to be done here.")
+                }
+                
+                taskTableView.reloadData()
+                addTextFieldData.text = ""
+                addTextFieldData.resignFirstResponder()
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Add Task Alert!!!", message: "Please add some data to add for the task!!!", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "OK", style: .default, handler:nil)
+                
+                alert.addAction(alertAction)
+                
+                self.present(alert, animated: true, completion:nil)
+            }
 
+
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Please select a section", message: "Select one of the item in Daily or Weekly or Monthly to add the task", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "OK", style: .default, handler:nil)
+            
+            alert.addAction(alertAction)
+            
+            self.present(alert, animated: true, completion:nil)
+        }
+    
+    }
+    
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        addTextFieldData.resignFirstResponder()
+        
+        return true
+    }
 }
 

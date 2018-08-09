@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yyY-uY-c1q">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="76" width="414" height="660"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <color key="sectionIndexColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
@@ -50,17 +50,49 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <textField opaque="NO" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Add the task here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X69-ga-2zw">
+                                <rect key="frame" x="0.0" y="28" width="341" height="40"/>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1bF-PI-Ks6"/>
+                                    <constraint firstAttribute="width" constant="341" id="N6z-t0-QE8"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yam-m5-mhO">
+                                <rect key="frame" x="349" y="28" width="57" height="40"/>
+                                <color key="backgroundColor" red="0.58081901069999997" green="0.088427625600000004" blue="0.31863921880000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="U8s-Ri-rw5"/>
+                                    <constraint firstAttribute="width" constant="57" id="qP8-GJ-sMv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="ADD">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="AddTask:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t6s-5b-a0O"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="yyY-uY-c1q" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="56C-cF-uaB"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Yam-m5-mhO" secondAttribute="trailing" constant="8" id="BcV-5M-Sb5"/>
+                            <constraint firstItem="Yam-m5-mhO" firstAttribute="centerY" secondItem="X69-ga-2zw" secondAttribute="centerY" id="EUf-hg-8Be"/>
+                            <constraint firstItem="X69-ga-2zw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="L1b-Gf-FxV"/>
                             <constraint firstItem="yyY-uY-c1q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="N61-me-NHd"/>
+                            <constraint firstItem="yyY-uY-c1q" firstAttribute="top" secondItem="X69-ga-2zw" secondAttribute="bottom" constant="8" id="X38-EO-VMg"/>
                             <constraint firstItem="yyY-uY-c1q" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="aUP-ff-zv8"/>
-                            <constraint firstItem="yyY-uY-c1q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="qzF-sH-uuC"/>
+                            <constraint firstItem="X69-ga-2zw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="kJG-M5-547"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="addTextFieldData" destination="X69-ga-2zw" id="2Ca-tu-T5M"/>
                         <outlet property="darkModeSwitchOutlet" destination="KMr-mZ-UYL" id="k7c-jT-lSU"/>
                         <outlet property="taskTableView" destination="yyY-uY-c1q" id="ieu-Su-85a"/>
                     </connections>
