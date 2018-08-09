@@ -16,6 +16,8 @@ Task Manager App is a basic iOS task manager app for iPhone with a beautiful use
 
 4) Clean and beautiful UI screens.
 
+5) Has "Dark Mode" feature which helps to view the tasks at night in better way. 
+
 
 ## License
 
