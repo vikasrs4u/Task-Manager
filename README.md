@@ -13,9 +13,9 @@ Task Manager App is a basic iOS task manager app for iPhone with a beautiful use
 
 2) The task can be marked complete by right swipe. 
 
-3) Can reset the task list anytime.
+3) Can reset the task list anytime by clicking on "Reset List" item at the toolbar. 
 
-4) Clean and beautiful UI screens.
+4) Clean and beautiful UI screen.
 
 5) Has "Dark Mode" feature which helps to view the tasks at night in a better way. 
 
