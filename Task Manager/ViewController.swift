@@ -14,9 +14,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBOutlet weak var addTextFieldData: UITextField!
     
+    @IBOutlet weak var addButtonWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var darkModeSwitchOutlet: UISwitch!
     
+    @IBOutlet weak var addButtonOutlet: UIButton!
     
     var dailyTask = [Task(name:"Do atleast one Coding problem.", type:.daily, completed: false),
                     Task(name:"Learn Data Structures.", type:.daily, completed: false),
@@ -30,21 +32,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                        Task(name:"Call a close relative.", type:.daily, completed: false),
                        Task(name:"Visit a new place.", type:.daily, completed: false)]
     
-    
-//    // Below is the table view delegate methods
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-//    {
-//            print ("Your selected row is \(indexPath.row) and its section is \(indexPath.section )")
-//    }
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         // added this code to dismiss the keyboard on return or touch outside
         self.addTextFieldData.delegate = self
         
-        addTextFieldData.backgroundColor = UIColor.clear
+        // nofification to check if message textfield has some data change or not.
+        NotificationCenter.default.addObserver(self, selector: #selector(changeAddButtonColor), name: .UITextFieldTextDidChange, object: nil)
+        
+        if (addTextFieldData.text?.count == 0)
+        {
+            addTextFieldData.layer.cornerRadius = 20
+            addTextFieldData.layer.masksToBounds = true
+            addButtonOutlet.backgroundColor = UIColor.clear
+            addButtonWidthConstraint.constant = 0
+        }
+        
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let completedAction = UIContextualAction(style: .normal, title: "Completed") { (action:UIContextualAction, sourceView:UIView, actionPerformed:(Bool)->Void) in
@@ -175,7 +180,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
              UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
             
-            addTextFieldData.backgroundColor = UIColor.cyan
         // This is very important as this calls the  table view delegate methods on relaod.
             taskTableView.reloadData()
             
@@ -184,7 +188,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         else
         {
             view.backgroundColor = UIColor.white
-            addTextFieldData.backgroundColor = UIColor.white
             UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
             
             // This is very important as this calls the  table view delegate methods on relaod.
@@ -287,6 +290,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         addTextFieldData.resignFirstResponder()
         
         return true
+    }
+    
+    // Method to show or hide the send button and also to make send button a circle
+    @objc func changeAddButtonColor()
+    {
+        if (addTextFieldData.text?.count == 0)
+        {
+            addTextFieldData.layer.cornerRadius = 20
+            addTextFieldData.layer.masksToBounds = true
+            addButtonOutlet.backgroundColor = UIColor.clear
+            addButtonWidthConstraint.constant = 0
+        }
+        else
+        {
+            addButtonWidthConstraint.constant = 57
+            addTextFieldData.layer.cornerRadius = 20
+            addTextFieldData.layer.masksToBounds = true
+            addButtonOutlet.backgroundColor = UIColor.clear
+            addButtonOutlet.setTitleColor(UIColor.blue, for: .normal)
+        }
     }
 }
 
