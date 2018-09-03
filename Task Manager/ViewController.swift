@@ -44,11 +44,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         if (addTextFieldData.text?.count == 0)
         {
-            addTextFieldData.layer.cornerRadius = 20
-            addTextFieldData.layer.masksToBounds = true
             addButtonOutlet.backgroundColor = UIColor.clear
             addButtonWidthConstraint.constant = 0
         }
+        roundingTheTextField()
         
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -297,19 +296,42 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         if (addTextFieldData.text?.count == 0)
         {
-            addTextFieldData.layer.cornerRadius = 20
-            addTextFieldData.layer.masksToBounds = true
             addButtonOutlet.backgroundColor = UIColor.clear
             addButtonWidthConstraint.constant = 0
         }
         else
         {
             addButtonWidthConstraint.constant = 57
-            addTextFieldData.layer.cornerRadius = 20
-            addTextFieldData.layer.masksToBounds = true
             addButtonOutlet.backgroundColor = UIColor.clear
             addButtonOutlet.setTitleColor(UIColor.blue, for: .normal)
         }
+    }
+    
+    
+    //Method to round the message textField
+    func roundingTheTextField()
+    {
+        //Basic texfield Setup
+        addTextFieldData.borderStyle = .none
+        addTextFieldData.backgroundColor = UIColor.white
+        
+        //To apply corner radius
+        addTextFieldData.layer.cornerRadius = addTextFieldData.frame.size.height / 2
+        
+        //To apply border
+        addTextFieldData.layer.borderWidth = 0.25
+        addTextFieldData.layer.borderColor = UIColor.white.cgColor
+        
+        //To apply Shadow
+        addTextFieldData.layer.shadowOpacity = 1
+        addTextFieldData.layer.shadowRadius = 1.2
+        addTextFieldData.layer.shadowOffset = CGSize.zero // Use any CGSize
+        addTextFieldData.layer.shadowColor = UIColor.gray.cgColor
+        
+        //To apply padding
+        let paddingView : UIView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: addTextFieldData.frame.height))
+        addTextFieldData.leftView = paddingView
+        addTextFieldData.leftViewMode = UITextFieldViewMode.always
     }
 }
 
