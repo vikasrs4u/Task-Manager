@@ -308,7 +308,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-    //Method to round the message textField
+    //Method to round the task addition textField
     func roundingTheTextField()
     {
         //Basic texfield Setup
