@@ -333,5 +333,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         addTextFieldData.leftView = paddingView
         addTextFieldData.leftViewMode = UITextFieldViewMode.always
     }
+    
+
 }
 
